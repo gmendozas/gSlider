@@ -85,15 +85,14 @@
 }
 
 .preview {
-	display: block;
+	display: none;
 	position: absolute;
 	width: 100px;
-	background: #aaa url("http://www.placehold.it/200x200");
-    -webkit-background-size: cover; /* For WebKit*/
-    -moz-background-size: cover;    /* Mozilla*/
-    -o-background-size: cover;      /* Opera*/
-    background-size: 100px 100px;   /* Generic*/   
-	background-repeat:no-repeat;
+    /*-webkit-background-size: cover; /* For WebKit*/
+    /*-moz-background-size: cover;    /* Mozilla*/
+    /*-o-background-size: cover;      /* Opera*/
+    /*background-size: 100px auto;   /*Generic*/   
+	/*background-repeat:no-repeat;*/
 	height: 100px;
 	left: 300px;
 	top: -100px;
