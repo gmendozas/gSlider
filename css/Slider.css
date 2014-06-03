@@ -88,11 +88,7 @@
 	display: none;
 	position: absolute;
 	width: 100px;
-    /*-webkit-background-size: cover; /* For WebKit*/
-    /*-moz-background-size: cover;    /* Mozilla*/
-    /*-o-background-size: cover;      /* Opera*/
-    /*background-size: 100px auto;   /*Generic*/   
-	/*background-repeat:no-repeat;*/
+    border-radius: 20px;
 	height: 100px;
 	left: 300px;
 	top: -100px;
