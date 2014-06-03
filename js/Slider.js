@@ -18,19 +18,24 @@ $(document).ready(function() {
 	images[6] = new Image("images/img7.jpg", "Imagen 7", "http://www.microsoft.com");
 
 	$("#bannerLink").hover(function() {
-		$(".previous").show();
-		$(".next").show();
-	}, function() {
-		//$(".previous").hide();
-		//$(".next").hide();
-	});
+			$(".bottomLabelImg").show();
+		},
+		function() {
+			$(".bottomLabelImg").hide();
+		}		
+	);
 
 	$(".bSelector a img").hover(function() {
 		var index = $(".bSelector a").index(this.parentElement);
-		$(".bSelector .preview").attr("src", images[index].src);//css("background", "#aaa url(\"" + images[index].src + "\")");
+		$(".bSelector .preview").attr("src", images[index].src);
 		$(".bSelector .preview").show();
+		$(".labelImg").text(images[index].alt);
 	}, function() {
 		$(".bSelector .preview").hide();
+	});
+	
+	$(".labelImg").click(function(){
+		$("#bannerImage").click();
 	});
 
 	startBanner();
@@ -56,6 +61,7 @@ function showNextImage(index, keepShow) {
 	$("#bannerLink").attr("href", images[index].link);
 	$(".bSelector a img").removeClass("selectedCircle");
 	$(".bSelector a img:eq(" + (index) + ")").attr("class", "selectedCircle");
+	$(".bottomLabelImg").text(images[index].alt);
 	if (keepShow) {
 		i = index;
 		timer = setTimeout("startBanner();", speed);
@@ -70,4 +76,5 @@ function showImage(next) {
 	}
 	newIndex = newIndex < 0 ? images.length - 1 : (newIndex >= images.length ? 0 : newIndex);
 	showNextImage(newIndex, true);
+	return false;
 }
