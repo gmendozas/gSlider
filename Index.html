@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 
 		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
-		Remove this if you use the .htaccess -->		
+		Remove this if you use the .htaccess -->
 
 		<title>Index</title>
 		<meta name="description" content="">
@@ -14,68 +14,35 @@
 		<link rel="shortcut icon" href="/favicon.ico">
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 		<link rel="stylesheet" href="css/Slider.css" type="text/css">
-		
+
 		<!-- Scripts -->
 		<script src="js/jquery-2.0.3.min.js"></script>
 		<script src="js/Slider.js"></script>
 	</head>
 
-	<body>
-		<div>
-			<header>
-				<h1>Index</h1>
-			</header>
-			<nav>
-				<p>
-					<a href="/">Home</a>,				</p>
-				<p>
-					<a href="http://about.me/sinner_universe">Contact</a>
-				</p>
-			</nav>			
-			
+	<body>		
 			<div id="mainContainer">
 				<div class="slider">
-					<a href="#" onclick="showImage(false);  return false;">
-						<img class="previous" src="images/left.png" alt="Previous" title="Previous" />
-					</a>					
-					<a id="bannerLink" class="bElement" target="_blank">
-						<img id="bannerImage" class="bElement" src="images/img1.jpg"/>
-						<div class="bottomLabelImg"></div>
-					</a>
-					<a href="#" onclick="showImage(true);  return false;">
-						<img class="next" src="images/right.png" alt="Next" title="Next" />
-					</a>							
+					<img class="playStop" src="images/play.png" id="stopped"/>
+					<a href="#" onclick="showImage(false);  return false;"> <img class="previous" src="images/left.png" alt="Previous" title="Previous" /> </a>
+					<a id="bannerLink" class="bElement" target="_blank"> <img id="bannerImage" class="bElement" src="images/img1.jpg"/> <div class="bottomLabelImg"></div> </a>
+					<a href="#" onclick="showImage(true);  return false;"> <img class="next" src="images/right.png" alt="Next" title="Next" /> </a>
 				</div>
-				<div class="bSelector">					
+				<div class="bSelector">
 					<img class="preview" />
-					<a href="#" onclick="showNextImage($('.bSelector a').index(this), true)">
-						<img src="images/circle.png"/>						
-					</a>
-					<a href="#" onclick="showNextImage($('.bSelector a').index(this), true)">
-						<img src="images/circle.png"/>									
-					</a>
-					<a href="#" onclick="showNextImage($('.bSelector a').index(this), true)">
-						<img src="images/circle.png"/>							
-					</a>
-					<a href="#" onclick="showNextImage($('.bSelector a').index(this), true)">
-						<img src="images/circle.png"/>						
-					</a>
-					<a href="#" onclick="showNextImage($('.bSelector a').index(this), true)">
-						<img src="images/circle.png"/>
-					</a>
-					<a href="#" onclick="showNextImage($('.bSelector a').index(this), true)">
-						<img src="images/circle.png"/>
-					</a>
-					<a href="#" onclick="showNextImage($('.bSelector a').index(this), true)">
-						<img src="images/circle.png"/>
-					</a>
+					<a onclick="showNextImage($('.bSelector a').index(this), true)"> <img src="images/circle.png"/> </a>
+					<a onclick="showNextImage($('.bSelector a').index(this), true)"> <img src="images/circle.png"/> </a>
+					<a onclick="showNextImage($('.bSelector a').index(this), true)"> <img src="images/circle.png"/> </a>
+					<a onclick="showNextImage($('.bSelector a').index(this), true)"> <img src="images/circle.png"/> </a>
+					<a onclick="showNextImage($('.bSelector a').index(this), true)"> <img src="images/circle.png"/> </a>
+					<a onclick="showNextImage($('.bSelector a').index(this), true)"> <img src="images/circle.png"/> </a>
+					<a onclick="showNextImage($('.bSelector a').index(this), true)"> <img src="images/circle.png"/> </a>
 				</div>
-			</div>			
-			<footer>
-				<p>
-					&copy; Copyright  by sinner_universe
-				</p>
-			</footer>
-		</div>
+			</div>
+		<footer>
+			<p>
+				<a href="http://about.me/sinner_universe">Contact</a>
+			</p>
+		</footer>
 	</body>
 </html>

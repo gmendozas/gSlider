@@ -37,7 +37,7 @@ $(document).ready(function() {
 	$(".labelImg").click(function(){
 		$("#bannerImage").click();
 	});
-
+	
 	startBanner();
 });
 
@@ -71,7 +71,8 @@ function showNextImage(index, keepShow) {
 
 function showImage(next) {
 	var newIndex = next ? i + 1 : i - 1;
-	if (firstTime) {--newIndex;
+	if (firstTime) {
+		--newIndex;
 		firstTime = false;
 	}
 	newIndex = newIndex < 0 ? images.length - 1 : (newIndex >= images.length ? 0 : newIndex);

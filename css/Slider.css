@@ -28,6 +28,14 @@
 	border-style: none;
 }
 
+.slider .playStop {
+	position: absolute;
+	top: 5%;
+	left: 3%;
+	cursor: pointer;
+	z-index: 60;
+}
+
 .slider .previous{
 	position: absolute;
 	display: block;
@@ -80,6 +88,7 @@
 	text-decoration: none;	
 	outline: none;
 	border-style: none;
+	cursor: pointer;
 }
 
 .bSelector a img {
