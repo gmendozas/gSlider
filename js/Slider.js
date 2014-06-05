@@ -38,6 +38,18 @@ $(document).ready(function() {
 		$("#bannerImage").click();
 	});
 	
+	$(".play").click(function() {
+		startBanner();
+		$(this).hide();
+		$(".stop").show();
+	});
+	
+	$(".stop").click(function() {
+		clearTimeout(timer);
+		$(this).hide();
+		$(".play").show();
+	});
+	
 	startBanner();
 });
 
@@ -67,6 +79,7 @@ function showNextImage(index, keepShow) {
 		timer = setTimeout("startBanner();", speed);
 	} else
 		i++;
+	showAndHideControls();
 }
 
 function showImage(next) {
@@ -77,5 +90,11 @@ function showImage(next) {
 	}
 	newIndex = newIndex < 0 ? images.length - 1 : (newIndex >= images.length ? 0 : newIndex);
 	showNextImage(newIndex, true);
+	showAndHideControls();
 	return false;
+}
+
+function showAndHideControls() {
+	$(".stop").show();
+	$(".play").hide();
 }

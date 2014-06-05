@@ -28,12 +28,33 @@
 	border-style: none;
 }
 
-.slider .playStop {
+.slider .play {
+	display: none;
 	position: absolute;
+	width: 50px;
+	height: 50px;
 	top: 5%;
 	left: 3%;
 	cursor: pointer;
 	z-index: 60;
+}
+
+.slider .play:hover {
+	background-image: url("../images/_play_hover.png");
+}
+
+.slider .stop {	
+	position: absolute;
+	width: 50px;
+	height: 50px;
+	top: 5%;
+	left: 3%;
+	cursor: pointer;
+	z-index: 60;
+}
+
+.slider .stop:hover {
+	background-image: url("../images/_pause_hover.png");
 }
 
 .slider .previous{
@@ -49,7 +70,7 @@
 }
 
 .slider .previous:hover {
-	background: url("../images/left_hover.png");
+	background: url("../images/left_.png");
 }
 
 .slider .next {
@@ -66,7 +87,7 @@
 }
 
 .slider .next:hover {
-	background-image: url("../images/right_hover.png");
+	background-image: url("../images/right_.png");
 }
 
 .bElement {
@@ -101,7 +122,9 @@
 }
 
 .bSelector a img:hover {
-	background: url("../images/circle_hover.png");		
+	background: url("../images/_circle_hover.png");
+	height: 22px;
+	width: 20px;		
 }
 
 .preview {
@@ -122,7 +145,7 @@
 	text-decoration: none !important;
 	outline: none !important;
 	border-style: none !important;
-	background: url("../images/circle_hover.png") !important;	
+	background: url("../images/circle_hover_.png") !important;	
 	width: 22px;
 	height: 20px;
 	color: transparent;
