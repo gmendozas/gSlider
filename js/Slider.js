@@ -8,14 +8,11 @@ var images = new Array();
 var i = 0, speed = 2000;
 var firstTime = true;
 
-$(document).ready(function() {
-	images[0] = new Image("images/img1.jpg", "Imagen 1", "http://www.google.com");
-	images[1] = new Image("images/img2.jpg", "Imagen 2", "http://www.compartamos.com.mx");
-	images[2] = new Image("images/img3.jpg", "Imagen 3", "http://es.wikipedia.com");
-	images[3] = new Image("images/img4.jpg", "Imagen 4", "http://www.outlook.com");
-	images[4] = new Image("images/img5.jpg", "Imagen 5", "http://twitter.com");
-	images[5] = new Image("images/img6.jpg", "Imagen 6", "http://www.facebook.com");
-	images[6] = new Image("images/img7.jpg", "Imagen 7", "http://www.microsoft.com");
+$(document).ready(function() {	
+	images[0] = new Image("images/img4.jpg", "Imagen 4", "http://www.google.com");
+	images[1] = new Image("images/img5.jpg", "Imagen 5", "http://twitter.com");
+	images[2] = new Image("images/img6.jpg", "Imagen 6", "http://www.facebook.com");
+	images[3] = new Image("images/img7.jpg", "Imagen 7", "http://www.microsoft.com");
 
 	$("#bannerLink").hover(function() {
 			$(".bottomLabelImg").show();
@@ -24,6 +21,47 @@ $(document).ready(function() {
 			$(".bottomLabelImg").hide();
 		}		
 	);
+	
+	$(".play").hover(
+		function(){
+			$(this).attr("src", "images/play_hover.png");
+		},
+		function(){
+			$(this).attr("src", "images/play.png");
+		}
+	);
+	
+	$(".previous").parent().click(function() {
+		showImage(false);  
+		return false;
+	});
+
+	$(".previous").hover(
+		function(){
+			$(this).attr("src", "images/left_hover.png");
+		},
+		function(){
+			$(this).attr("src", "images/left.png");
+		}
+	);
+
+	$(".next").parent().click(function() {
+		showImage(true);  
+		return false;
+	});
+		
+	$(".next").hover(
+		function(){
+			$(this).attr("src", "images/right_hover.png");
+		},
+		function(){
+			$(this).attr("src", "images/right.png");
+		}
+	);
+	
+	$(".bSelector a").click(function() {
+		showNextImage($('.bSelector a').index($(this)), true);
+	});
 
 	$(".bSelector a img").hover(function() {
 		var index = $(".bSelector a").index(this.parentElement);

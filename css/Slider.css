@@ -39,9 +39,9 @@
 	z-index: 60;
 }
 
-.slider .play:hover {
-	background-image: url("../images/_play_hover.png");
-}
+/*.slider .play:hover {
+	background-image: url("../images/play_hover.png");
+}*/
 
 .slider .stop {	
 	position: absolute;
@@ -54,7 +54,7 @@
 }
 
 .slider .stop:hover {
-	background-image: url("../images/_pause_hover.png");
+	background-image: url("../images/pause_hover.png");
 }
 
 .slider .previous{
@@ -69,9 +69,9 @@
 	width: 50px;
 }
 
-.slider .previous:hover {
-	background: url("../images/left_.png");
-}
+/*.slider .previous:hover {
+	background: url("../images/left_hover.png");
+}*/
 
 .slider .next {
 	position: absolute;
@@ -85,10 +85,10 @@
 	height: 50px;
 	width: 50px;
 }
-
+/*
 .slider .next:hover {
-	background-image: url("../images/right_.png");
-}
+	background: url("../images/right_hover.png");
+}*/
 
 .bElement {
 	width: inherit;
@@ -122,7 +122,7 @@
 }
 
 .bSelector a img:hover {
-	background: url("../images/_circle_hover.png");
+	background: url("../images/circle_hover.png");
 	height: 22px;
 	width: 20px;		
 }
@@ -145,7 +145,7 @@
 	text-decoration: none !important;
 	outline: none !important;
 	border-style: none !important;
-	background: url("../images/circle_hover_.png") !important;	
+	background: url("../images/circle_hover.png") !important;	
 	width: 22px;
 	height: 20px;
 	color: transparent;
@@ -173,7 +173,9 @@
 	bottom: 6px;
 	background-color: rgba(51, 51, 51, 0.5);
 	color: #fff;
-	width: 96.5%;
+	width: 97.9%;
+	max-width: 97.9%;
+	min-width: 97.9%;
 	padding: 0.55556rem 0.77778rem;
 	font-size: 0.77778rem;
 }
