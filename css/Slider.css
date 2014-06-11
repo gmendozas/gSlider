@@ -136,9 +136,10 @@
 	-moz-border-radius: 150px;
 	height: 100px;
 	left: 44%;
-	top: -570%;
+	top: -585%;
 	color: #FFFFFF; 
-	padding: 0 5px;
+	padding: 0px;
+	border: 5px solid black;
 }
 
 .selectedCircle {
