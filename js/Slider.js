@@ -31,9 +31,8 @@ $(document).ready(function() {
 		}
 	);
 	
-	$(".previous").parent().click(function() {
+	$(".previous").click(function() {
 		showImage(false);  
-		return false;
 	});
 
 	$(".previous").hover(
@@ -45,9 +44,8 @@ $(document).ready(function() {
 		}
 	);
 
-	$(".next").parent().click(function() {
+	$(".next").click(function() {
 		showImage(true);  
-		return false;
 	});
 		
 	$(".next").hover(
