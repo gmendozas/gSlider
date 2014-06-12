@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<images>
+	<image>
+		<src>images/img4.jpg</src>
+		<alt>Imagen 4</alt>
+		<link>http://www.google.com"</link>
+	</image>
+	<image>
+		<src>images/img5.jpg</src>
+		<alt>Imagen 5</alt>
+		<link>http://www.twitter.com"</link>
+	</image>
+	<image>
+		<src>images/img6.jpg</src>
+		<alt>Imagen 6</alt>
+		<link>http://www.facebook.com"</link>
+	</image>
+	<image>
+		<src>images/img7.jpg</src>
+		<alt>Imagen 7</alt>
+		<link>http://www.microsoft.com"</link>
+	</image>
+</images>
