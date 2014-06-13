@@ -99,7 +99,7 @@ function showAndHideControls(){
 };
 
 $(document).ready(function() {	
-	s.loadImagesData("xml", "imagesSource.xml");
+	s.loadImagesData();
 	
 	$("#bannerLink").hover(function() {
 			$(".bottomLabelImg").show();
