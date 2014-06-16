@@ -5,21 +5,23 @@ function Image(src, alt, link) {
 	this.link = link;
 };
 // Class Slider
-function Slider(speed, format, filename, data) {
+function Slider(options) {
+	this.bullets = options.bullets;
+	this.data = options.data;
+	this.filename = options.filename;
 	this.images = new Array();	
-	this.speed = speed;
-	this.format = format;
-	this.filename = filename;
+	this.speed = options.speed;
+	this.type = options.type;	
 }
 // Functions of Slider
 Slider.prototype.loadImagesData = function() {	
 	try {
 		if(this.data != undefined && this.type == 'json') {
-			if(type == "json")
+			if(this.type == "json")
 				this.images = $.parseJSON(this.data).images;
 		} else {
 			var imgs = new Array();
-			var format = this.format;
+			var format = this.type;
 			$.ajax({
 				type: "GET",
 				url: this.filename,
@@ -100,6 +102,13 @@ function showAndHideControls(){
 
 $(document).ready(function() {	
 	s.loadImagesData();
+	
+	if(s.bullets != undefined) {
+		if(s.bullets == "yes")
+			$(".bSelector").show();
+		else if(s.bullets == "no")
+			$(".bSelector").hide(); 
+	}
 	
 	$("#bannerLink").hover(function() {
 			$(".bottomLabelImg").show();
