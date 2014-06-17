@@ -6,10 +6,14 @@ function Image(src, alt, link) {
 };
 // Class Slider
 function Slider(options) {
-	this.bullets = options.bullets;
+	this.bullets = options.bullets == undefined ? "yes" : options.bullets;
+	this.controls = options.controls == undefined ? "yes" : options.controls;
 	this.data = options.data;
+	this.ffControls = options.ffControls == undefined ? "yes" : options.ffControls;
 	this.filename = options.filename;
-	this.images = new Array();	
+	this.images = new Array();
+	this.label = options.label == undefined ? "yes" : options.label;
+	this.preview = options.preview == undefined ? "yes" : options.preview;	
 	this.speed = options.speed;
 	this.type = options.type;	
 }
@@ -80,7 +84,8 @@ function showNextImage(index, keepShow) {
 		timer = setTimeout("startBanner();", s.speed);
 	} else
 		i++;
-	showAndHideControls();
+	if(s.controls == "yes")
+		showAndHideControls();
 };
 
 function showImage(next) {
@@ -91,7 +96,8 @@ function showImage(next) {
 	}
 	newIndex = newIndex < 0 ? s.images.length - 1 : (newIndex >= s.images.length ? 0 : newIndex);
 	showNextImage(newIndex, true);
-	showAndHideControls();
+	if(s.controls == "yes")
+		showAndHideControls();
 	return false;
 };
 
@@ -103,84 +109,114 @@ function showAndHideControls(){
 $(document).ready(function() {	
 	s.loadImagesData();
 	
-	if(s.bullets != undefined) {
-		if(s.bullets == "yes")
+	$(".next").hide();
+	
+	if(s.bullets != undefined) { // Show or hide bullets
+		if(s.bullets == "yes") {
 			$(".bSelector").show();
+			$(".bSelector a").click(function() {
+				showNextImage($('.bSelector a').index($(this)), true);
+			});					
+			
+			$(s.images).each(function() { // Create bullets using number of images to show	
+				$(".bSelector").append('<a><img src="images/circle.png"/></a>');
+			});
+			
+			if(s.preview != undefined) { // Show or hide image preview
+				if(s.preview == "yes") {
+					$(".bSelector a img").hover(function() {
+						var index = $(".bSelector a").index(this.parentElement);
+						$(".bSelector .preview").attr("src", s.images[index].src);
+						$(".bSelector .preview").show();
+						$(".labelImg").text(s.images[index].alt);
+					}, function() {
+						$(".bSelector .preview").hide();
+					});
+				}
+			}	
+		}
 		else if(s.bullets == "no")
 			$(".bSelector").hide(); 
 	}
 	
-	$("#bannerLink").hover(function() {
-			$(".bottomLabelImg").show();
-		},
-		function() {
-			$(".bottomLabelImg").hide();
+	if(s.label != undefined) { // Show or hide image label
+		if(s.label == "yes") {
+			$("#bannerLink").hover(function() {
+					$(".bottomLabelImg").show();
+				},
+				function() {
+					$(".bottomLabelImg").hide();
+				}		
+			);
+			
+			$(".labelImg").click(function(){
+				$("#bannerImage").click();
+			});		
+		} else {
+			$(".labelImg").hide();
 		}		
-	);
-	
-	$(".play").hover(
-		function(){
-			$(this).attr("src", "images/play_hover.png");
-		},
-		function(){
-			$(this).attr("src", "images/play.png");
-		}
-	);
-	
-	$(".previous").click(function() {
-		showImage(false);  
-	});
-
-	$(".previous").hover(
-		function(){
-			$(this).attr("src", "images/left_hover.png");
-		},
-		function(){
-			$(this).attr("src", "images/left.png");
-		}
-	);
-
-	$(".next").click(function() {
-		showImage(true);  
-	});
+	}
 		
-	$(".next").hover(
-		function(){
-			$(this).attr("src", "images/right_hover.png");
-		},
-		function(){
-			$(this).attr("src", "images/right.png");
+	if(s.controls != undefined) { // Show or hide play/pause controls
+		if(s.controls == "yes") {
+			$(".play").hover(
+				function(){
+					$(this).attr("src", "images/play_hover.png");
+				},
+				function(){
+					$(this).attr("src", "images/play.png");
+				}
+			);
+			
+			$(".play").click(function() {
+				startBanner();
+				$(this).hide();
+				$(".stop").show();
+			});
+			
+			$(".stop").click(function() {
+				clearTimeout(timer);
+				$(this).hide();
+				$(".play").show();
+			});	
+		} else {
+			$(".slider .play").hide();
+			$(".slider .stop").hide();
+		}		
+	}		
+	
+	if(s.ffControls != undefined) { // Show or hide fast and forward controls
+		if(s.ffControls == "yes") {
+			$(".previous").click(function() {
+				showImage(false);  
+			});
+		
+			$(".previous").hover(
+				function(){
+					$(this).attr("src", "images/left_hover.png");
+				},
+				function(){
+					$(this).attr("src", "images/left.png");
+				}
+			);
+		
+			$(".next").click(function() {
+				showImage(true);  
+			});
+				
+			$(".next").hover(
+				function(){
+					$(this).attr("src", "images/right_hover.png");
+				},
+				function(){
+					$(this).attr("src", "images/right.png");
+				}
+			);	
+		} else {
+			$(".previous").hide();
+			$(".next").hide();
 		}
-	);
-	
-	$(".bSelector a").click(function() {
-		showNextImage($('.bSelector a').index($(this)), true);
-	});
-
-	$(".bSelector a img").hover(function() {
-		var index = $(".bSelector a").index(this.parentElement);
-		$(".bSelector .preview").attr("src", s.images[index].src);
-		$(".bSelector .preview").show();
-		$(".labelImg").text(s.images[index].alt);
-	}, function() {
-		$(".bSelector .preview").hide();
-	});
-	
-	$(".labelImg").click(function(){
-		$("#bannerImage").click();
-	});
-	
-	$(".play").click(function() {
-		startBanner();
-		$(this).hide();
-		$(".stop").show();
-	});
-	
-	$(".stop").click(function() {
-		clearTimeout(timer);
-		$(this).hide();
-		$(".play").show();
-	});
+	}	
 	
 	setTimeout("startBanner();", 30);
 });

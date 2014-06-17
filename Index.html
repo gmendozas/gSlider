@@ -19,11 +19,14 @@
 		<script src="js/jquery-2.0.3.min.js"></script>
 		<script src="js/Slider.js"></script>
 		<script type="text/javascript">
-			var s = new Slider({
-				bullets: "yes",				
+			var s = new Slider({				
+				controls: 'no',				
 				data: '{"images":[{"src":"images/img4.jpg","alt":"Imagen 4","link":"http://www.google.com"},{"src":"images/img5.jpg","alt":"Imagen 5","link":"http://twitter.com"},{"src":"images/img6.jpg","alt":"Imagen 6","link":"http://www.facebook.com"},{"src":"images/img7.jpg","alt":"Imagen 7","link":"http://www.microsoft.com"}]}',
+				ffControls: "no",
+				label: 'no',
+				preview: 'yes',
 				speed: 2000,
-				type: "json"				
+				type: 'json'				
 			});
 		</script>
 	</head>
@@ -42,10 +45,6 @@
 				</div>
 				<div class="bSelector">
 					<img class="preview" />					
-					<a><img src="images/circle.png"/></a>
-					<a><img src="images/circle.png"/></a>
-					<a><img src="images/circle.png"/></a>
-					<a><img src="images/circle.png"/></a>
 				</div>
 			</div>
 		<footer>
