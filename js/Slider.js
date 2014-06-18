@@ -9,8 +9,10 @@ function Slider(options) {
 	this.bullets = options.bullets == undefined ? "yes" : options.bullets;
 	this.controls = options.controls == undefined ? "yes" : options.controls;
 	this.data = options.data;
+	this.effect = options.effect == undefined ? "fade" : options.effect;
 	this.ffControls = options.ffControls == undefined ? "yes" : options.ffControls;
 	this.filename = options.filename;
+	this.frame = options.frame == undefined ? "no" : "yes";
 	this.images = new Array();
 	this.label = options.label == undefined ? "yes" : options.label;
 	this.preview = options.preview == undefined ? "yes" : options.preview;	
@@ -62,9 +64,21 @@ function startBanner() {
 	if (i == s.images.length)
 		i = 0;
 	showNextImage(i, false);
-	$("#bannerImage").fadeTo(1000, 1);
+	if(s.effect == "fade")
+		$("#bannerImage").fadeTo(1000, 1);
+	else if(s.effect == "slide")
+		$("#bannerImage").slideDown(s.speed);
+	else if(s.effect == "toggle")
+		$("#bannerImage").toggle();
+		
 	timer = setTimeout("startBanner();", s.speed);
-	$("#bannerImage").fadeTo(1500, 0.9);
+	
+	if(s.effect == "fade")
+		$("#bannerImage").fadeTo(1500, 0.9);
+	else if(s.effect == "slide")
+		$("#bannerImage").slideUp(s.speed);
+	else if(s.effect == "toggle")
+		$("#bannerImage").toggle();
 };
 
 function showNextImage(index, keepShow) {
@@ -109,7 +123,13 @@ function showAndHideControls(){
 $(document).ready(function() {	
 	s.loadImagesData();
 	
-	$(".next").hide();
+	if(s.frame != undefined) {
+		if(s.frame == "no") {
+			$("#mainContainer").css("border", "none");
+			$("#mainContainer").css("box-shadow", "none");
+			$("#mainContainer").css("-webkit-box-shadow", "none");
+		}
+	}
 	
 	if(s.bullets != undefined) { // Show or hide bullets
 		if(s.bullets == "yes") {
