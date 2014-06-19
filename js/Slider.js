@@ -8,12 +8,13 @@ function Image(src, alt, link) {
 function Slider(options) {
 	this.bullets = options.bullets == undefined ? "yes" : options.bullets;
 	this.controls = options.controls == undefined ? "yes" : options.controls;
-	this.data = options.data;
-	this.effect = options.effect == undefined ? "fade" : options.effect;
+	this.effect = options.effect;
+	this.effect.name = this.effect.name == undefined ? "fade" : options.effect.name;
+	this.effect.opacity = this.effect.opacity == undefined ? 0.9 : options.effect.opacity;
 	this.ffControls = options.ffControls == undefined ? "yes" : options.ffControls;
-	this.filename = options.filename;
+	this.url = options.url;
 	this.frame = options.frame == undefined ? "no" : "yes";
-	this.images = new Array();
+	this.images = options.images.images != undefined ? options.images.images : new Array();
 	this.label = options.label == undefined ? "yes" : options.label;
 	this.preview = options.preview == undefined ? "yes" : options.preview;	
 	this.speed = options.speed;
@@ -22,15 +23,12 @@ function Slider(options) {
 // Functions of Slider
 Slider.prototype.loadImagesData = function() {	
 	try {
-		if(this.data != undefined && this.type == 'json') {
-			if(this.type == "json")
-				this.images = $.parseJSON(this.data).images;
-		} else {
+		if(this.url != undefined) {			
 			var imgs = new Array();
 			var format = this.type;
 			$.ajax({
 				type: "GET",
-				url: this.filename,
+				url: this.url,
 				dataType: format,
 				success: function(result){
 					if(format == "xml") {						
@@ -60,30 +58,75 @@ Slider.prototype.loadImagesData = function() {
 var i = 0;
 var firstTime = true;
 
+function startAnimation() {
+	if(s.effect.name == "fade")
+		$("#bannerImage").fadeTo(1000, s.effect.opacity);
+	else if(s.effect.name == "slide")
+		$("#bannerImage").slideDown(s.speed);
+	else if(s.effect.name == "toggle")
+		$("#bannerImage").toggle(s.effect.kind);
+	else if(s.effect.name == "animate") {
+		$("#bannerImage").animate({			 	
+    			left:'800px',
+    			width: '100px',
+    			opacity:'0.9',
+			 }, s.speed, s.effect.kind);
+	}
+	//runEffect();
+}
+
+function runEffect() {      // get effect type from    
+	    // most effect types need no options passed by default      
+	    var options = {};      
+	    // some effects have required parameters      
+	    if (s.effect.name === "scale" ) {        
+	    	options = { percent: 0 };      
+	    } else if ( s.effect.name === "transfer" ) { 
+	    	options = { to: "#button", className: "ui-effects-transfer" };      
+	    } else if ( s.effect.name === "size" ) { 
+	    	options = { to: { width: 200, height: 60 } };
+	    }       
+	    // run the effect
+	    $( "#bannerImage" ).effect( s.effect.name, options, 700, callback);    
+};
+
+// callback function to bring a hidden box back    
+function callback() {      
+	setTimeout(function() {
+		$( "#bannerImage" ).removeAttr( "style" ).fadeTo(1000, s.effect.opacity);
+	}, 500 );
+};
+
+function stopAnimation() {
+	if(s.effect.name == "fade")
+		$("#bannerImage").fadeTo(1500, s.effect.opacity);
+	else if(s.effect.name == "slide")
+		$("#bannerImage").slideUp(s.speed);
+	else if(s.effect.name == "toggle")
+		$("#bannerImage").toggle(s.effect.kind);
+	else if(s.effect.name == "animate") { 
+		$("#bannerImage").css({
+			left:'',
+    		width: '',
+    		opacity:'',
+		});
+	}
+}
+
 function startBanner() {
 	if (i == s.images.length)
 		i = 0;
-	showNextImage(i, false);
-	if(s.effect == "fade")
-		$("#bannerImage").fadeTo(1000, 1);
-	else if(s.effect == "slide")
-		$("#bannerImage").slideDown(s.speed);
-	else if(s.effect == "toggle")
-		$("#bannerImage").toggle();
-		
-	timer = setTimeout("startBanner();", s.speed);
-	
-	if(s.effect == "fade")
-		$("#bannerImage").fadeTo(1500, 0.9);
-	else if(s.effect == "slide")
-		$("#bannerImage").slideUp(s.speed);
-	else if(s.effect == "toggle")
-		$("#bannerImage").toggle();
+	showNextImage(i, false);	
+	startAnimation();	
+	timer = setTimeout("startBanner();", s.speed);	
+	stopAnimation();
 };
 
 function showNextImage(index, keepShow) {
-	if (keepShow)
+	if (keepShow) {
+		startAnimation();		
 		clearTimeout(timer);
+	}
 
 	i = i > s.images.length ? 0 : (i < 0 ? s.images.length - 1 : i);
 
@@ -94,8 +137,9 @@ function showNextImage(index, keepShow) {
 	$(".bSelector a img:eq(" + (index) + ")").attr("class", "selectedCircle");
 	$(".bottomLabelImg").text(s.images[index].alt);
 	if (keepShow) {
-		i = index;
+		i = index;		
 		timer = setTimeout("startBanner();", s.speed);
+		stopAnimation();
 	} else
 		i++;
 	if(s.controls == "yes")
@@ -123,7 +167,7 @@ function showAndHideControls(){
 $(document).ready(function() {	
 	s.loadImagesData();
 	
-	if(s.frame != undefined) {
+	if(s.frame != undefined) { // Show or hide frame
 		if(s.frame == "no") {
 			$("#mainContainer").css("border", "none");
 			$("#mainContainer").css("box-shadow", "none");
@@ -133,14 +177,15 @@ $(document).ready(function() {
 	
 	if(s.bullets != undefined) { // Show or hide bullets
 		if(s.bullets == "yes") {
-			$(".bSelector").show();
-			$(".bSelector a").click(function() {
-				showNextImage($('.bSelector a').index($(this)), true);
-			});					
+			$(".bSelector").show();			
 			
 			$(s.images).each(function() { // Create bullets using number of images to show	
 				$(".bSelector").append('<a><img src="images/circle.png"/></a>');
 			});
+			
+			$(".bSelector a").click(function() {
+				showNextImage($('.bSelector a').index($(this)), true);
+			});					
 			
 			if(s.preview != undefined) { // Show or hide image preview
 				if(s.preview == "yes") {

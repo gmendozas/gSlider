@@ -17,35 +17,59 @@
 
 		<!-- Scripts -->
 		<script src="js/jquery-2.0.3.min.js"></script>
+		<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 		<script src="js/Slider.js"></script>
 		<script type="text/javascript">
 			var s = new Slider({				
 				controls: 'no',				
-				data: '{"images":[{"src":"images/img4.jpg","alt":"Imagen 4","link":"http://www.google.com"},{"src":"images/img5.jpg","alt":"Imagen 5","link":"http://twitter.com"},{"src":"images/img6.jpg","alt":"Imagen 6","link":"http://www.facebook.com"},{"src":"images/img7.jpg","alt":"Imagen 7","link":"http://www.microsoft.com"}]}',
-				effect: 'fade',
-				frame: 'yes',
+				effect: { name: "fade", opacity: 0.8},
+				images: {
+						"images":[
+								{
+									"src":"http://www.teach-ict.com/gcse_computing/ocr/214_representing_data/units/miniweb/images/bitbyte.jpg",
+									"alt":"Imagen 4",
+									"link":"http://www.google.com"
+								},
+								{
+									"src":"http://www.ingenierosistemas.com/wp-content/uploads/2011/06/Bits-y-Bytes.jpg",
+									"alt":"Imagen 5",
+									"link":"http://twitter.com"
+								},
+								{
+									"src":"images/img6.jpg",
+									"alt":"Imagen 6",
+									"link":"http://www.facebook.com"
+								},
+								{
+									"src":"images/img7.jpg",
+									"alt":"Imagen 7",
+									"link":"http://www.microsoft.com"
+								}
+							]
+					  },				
 				label: 'no',
 				preview: 'yes',
-				speed: 3000,
-				type: 'json'				
+				speed: 3000,				
 			});
 		</script>
 	</head>
 
 	<body>		
-			<div id="mainContainer">
-				<div class="slider">					
-					<img class="play" src="images/play.png" />
-					<img class="stop" src="images/pause.png" />
-					<img class="previous" src="images/left.png" alt="Previous" title="Previous" />
-					<a id="bannerLink" class="bElement" target="_blank">						
-						<img id="bannerImage" class="bElement" />
-						<div class="bottomLabelImg"> </div>						
-					</a>					
-					<img class="next" src="images/right.png" alt="Next" title="Next" />
-				</div>
-				<div class="bSelector">
-					<img class="preview" />					
+			<div style="width: 800px; height: 350px">
+				<div id="mainContainer">
+					<div class="slider">					
+						<img class="play" src="images/play.png" />
+						<img class="stop" src="images/pause.png" />
+						<img class="previous" src="images/left.png" alt="Previous" title="Previous" />
+						<a id="bannerLink" class="bElement" target="_blank">						
+							<img id="bannerImage" class="bElement" />
+							<div class="bottomLabelImg"> </div>						
+						</a>					
+						<img class="next" src="images/right.png" alt="Next" title="Next" />
+					</div>
+					<div class="bSelector">
+						<img class="preview" />					
+					</div>
 				</div>
 			</div>
 		<footer>
