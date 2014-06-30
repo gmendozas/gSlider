@@ -17,10 +17,10 @@
 
 		<!-- Scripts -->
 		<script src="js/jquery-2.0.3.min.js"></script>
-		<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 		<script src="js/Slider.js"></script>
 		<script type="text/javascript">
-			var s = new Slider({				
+			var banner = new Slider({
+				arrows: 'yes',				
 				controls: 'no',				
 				effect: { name: "toggle", opacity: 0.8},
 				images: {
@@ -49,8 +49,9 @@
 					  },				
 				label: 'no',
 				preview: 'yes',
-				speed: 3000,
+				speed: 3000
 			});
+			banner.run();
 		</script>
 	</head>
 

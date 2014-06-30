@@ -13,6 +13,7 @@ function Image(src, alt, link) {
 /**
  * Defines the properties of Slider.
  * 
+ * arrows: Let use left and right arrow to change banner. Use "yes" to let use arrows and "no" in otherwise. Default value: "no".
  * bullets: Let show or hide how many images are, it shows the selected one. Use "yes" to show them and "no" in otherwise. Default value: "yes". 
  * controls: Let show or hide play and pause controls. Use "yes" to show them and "no" in otherwise. Default value: "yes",
  * effect: Set of value that defines Slider effect.
@@ -27,7 +28,8 @@ function Image(src, alt, link) {
  * speed: Defines the time that image going to change. It must be in miliseconds. Default value: 3000 miliseconds.
  * type: When you use a request to get images you must define data format, you can use "json" or "xml".
  */
-function Slider(options) {
+function Slider(options) {	
+	this.arrows = options.arrows == undefined ? "no" : options.arrows;
 	this.bullets = options.bullets == undefined ? "yes" : options.bullets;
 	this.controls = options.controls == undefined ? "yes" : options.controls;
 	this.effect = options.effect;
@@ -39,7 +41,7 @@ function Slider(options) {
 	this.images = options.images.images != undefined ? options.images.images : new Array();
 	this.label = options.label == undefined ? "yes" : options.label;
 	this.preview = options.preview == undefined ? "yes" : options.preview;
-	this.speed = options.speed == undefined ? 3000 : option.speed;
+	this.speed = options.speed == undefined ? 3000 : options.speed;
 	this.type = options.type;	
 }
 
@@ -79,6 +81,10 @@ Slider.prototype.loadImagesData = function() {
 		return err;
 	}
 	return true;
+};
+
+Slider.prototype.run = function() {
+	s = jQuery.extend(true, {}, this);
 };
 
 // Slider code
@@ -152,123 +158,139 @@ function showAndHideControls(){
 };
 
 $(document).ready(function() {	
-	s.loadImagesData();
-	
-	if(s.frame != undefined) { // Show or hide frame
-		if(s.frame == "no") {
-			$("#mainContainer").css("border", "none");
-			$("#mainContainer").css("box-shadow", "none");
-			$("#mainContainer").css("-webkit-box-shadow", "none");
+	try {	
+		s.loadImagesData();
+		
+		if(s.frame != undefined) { // Show or hide frame
+			if(s.frame == "no") {
+				$("#mainContainer").css("border", "none");
+				$("#mainContainer").css("box-shadow", "none");
+				$("#mainContainer").css("-webkit-box-shadow", "none");
+			}
 		}
-	}
-	
-	if(s.bullets != undefined) { // Show or hide bullets
-		if(s.bullets == "yes") {
-			$(".bSelector").show();			
-			
-			$(s.images).each(function() { // Create bullets using number of images to show	
-				$(".bSelector").append('<a><img src="images/circle.png"/></a>');
-			});
-			
-			$(".bSelector a").click(function() {
-				showNextImage($('.bSelector a').index($(this)), true);
-			});					
-			
-			if(s.preview != undefined) { // Show or hide image preview
-				if(s.preview == "yes") {
-					$(".bSelector a img").hover(function() {
-						var index = $(".bSelector a").index(this.parentElement);
-						$(".bSelector .preview").attr("src", s.images[index].src);
-						$(".bSelector .preview").show();
-						$(".labelImg").text(s.images[index].alt);
-					}, function() {
-						$(".bSelector .preview").hide();
-					});
-				}
-			}	
-		}
-		else if(s.bullets == "no")
-			$(".bSelector").hide(); 
-	}
-	
-	if(s.label != undefined) { // Show or hide image label
-		if(s.label == "yes") {
-			$("#bannerLink").hover(function() {
-					$(".bottomLabelImg").show();
-				},
-				function() {
-					$(".bottomLabelImg").hide();
-				}		
-			);
-			
-			$(".labelImg").click(function(){
-				$("#bannerImage").click();
-			});		
-		} else {
-			$(".labelImg").hide();
-		}		
-	}
 		
-	if(s.controls != undefined) { // Show or hide play/pause controls
-		if(s.controls == "yes") {
-			$(".play").hover(
-				function(){
-					$(this).attr("src", "images/play_hover.png");
-				},
-				function(){
-					$(this).attr("src", "images/play.png");
-				}
-			);
-			
-			$(".play").click(function() {
-				startBanner();
-				$(this).hide();
-				$(".stop").show();
-			});
-			
-			$(".stop").click(function() {
-				clearTimeout(timer);
-				$(this).hide();
-				$(".play").show();
-			});	
-		} else {
-			$(".slider .play").hide();
-			$(".slider .stop").hide();
-		}		
-	}		
-	
-	if(s.ffControls != undefined) { // Show or hide fast and forward controls
-		if(s.ffControls == "yes") {
-			$(".previous").click(function() {
-				showImage(false);  
-			});
-		
-			$(".previous").hover(
-				function(){
-					$(this).attr("src", "images/left_hover.png");
-				},
-				function(){
-					$(this).attr("src", "images/left.png");
-				}
-			);
-		
-			$(".next").click(function() {
-				showImage(true);  
-			});
+		if(s.bullets != undefined) { // Show or hide bullets
+			if(s.bullets == "yes") {
+				$(".bSelector").show();			
 				
-			$(".next").hover(
-				function(){
-					$(this).attr("src", "images/right_hover.png");
-				},
-				function(){
-					$(this).attr("src", "images/right.png");
-				}
-			);	
-		} else {
-			$(".previous").hide();
-			$(".next").hide();
+				$(s.images).each(function() { // Create bullets using number of images to show	
+					$(".bSelector").append('<a><img src="images/circle.png"/></a>');
+				});
+				
+				$(".bSelector a").click(function() {
+					showNextImage($('.bSelector a').index($(this)), true);
+				});					
+				
+				if(s.preview != undefined) { // Show or hide image preview
+					if(s.preview == "yes") {
+						$(".bSelector a img").hover(function() {
+							var index = $(".bSelector a").index(this.parentElement);
+							$(".bSelector .preview").attr("src", s.images[index].src);
+							$(".bSelector .preview").show();
+							$(".labelImg").text(s.images[index].alt);
+						}, function() {
+							$(".bSelector .preview").hide();
+						});
+					}
+				}	
+			}
+			else if(s.bullets == "no")
+				$(".bSelector").hide(); 
 		}
-	}	
-	
+		
+		if(s.label != undefined) { // Show or hide image label
+			if(s.label == "yes") {
+				$("#bannerLink").hover(function() {
+						$(".bottomLabelImg").show();
+					},
+					function() {
+						$(".bottomLabelImg").hide();
+					}		
+				);
+				
+				$(".labelImg").click(function(){
+					$("#bannerImage").click();
+				});		
+			} else {
+				$(".labelImg").hide();
+			}		
+		}
+			
+		if(s.controls != undefined) { // Show or hide play/pause controls
+			if(s.controls == "yes") {
+				$(".play").hover(
+					function(){
+						$(this).attr("src", "images/play_hover.png");
+					},
+					function(){
+						$(this).attr("src", "images/play.png");
+					}
+				);
+				
+				$(".play").click(function() {
+					startBanner();
+					$(this).hide();
+					$(".stop").show();
+				});
+				
+				$(".stop").click(function() {
+					clearTimeout(timer);
+					$(this).hide();
+					$(".play").show();
+				});	
+			} else {
+				$(".slider .play").hide();
+				$(".slider .stop").hide();
+			}		
+		}		
+		
+		if(s.ffControls != undefined) { // Show or hide fast and forward controls
+			if(s.ffControls == "yes") {
+				$(".previous").click(function() {
+					showImage(false);  
+				});
+			
+				$(".previous").hover(
+					function(){
+						$(this).attr("src", "images/left_hover.png");
+					},
+					function(){
+						$(this).attr("src", "images/left.png");
+					}
+				);
+			
+				$(".next").click(function() {
+					showImage(true);  
+				});
+					
+				$(".next").hover(
+					function(){
+						$(this).attr("src", "images/right_hover.png");
+					},
+					function(){
+						$(this).attr("src", "images/right.png");
+					}
+				);	
+			} else {
+				$(".previous").hide();
+				$(".next").hide();
+			}
+		}	
+	} catch(err) {
+		Console.log("An error ocurred: " + err);
+		alert("An error ocurred when configure banner : " + err);
+	}
 	setTimeout("startBanner();", 30);
+});
+
+$(document).keydown(function(event) {
+	 var keynum = event.which ? event.which : event.keyCode;
+	 if(s.arrows != undefined) {
+	 	if(s.arrows == "yes") {
+			if(keynum == 37) // Left arrow
+     			showImage(false);
+     		else if(keynum == 39) // Right arrow
+     			showImage(true);	 		
+	 	}	
+	 }     
 });
