@@ -1,10 +1,32 @@
-// Class image
+/**
+ * Represents an image.
+ * url: Location of image, it coudl be local.
+ * alt: Alternative text, if you activate "label" option, alternative text will appear.
+ * link: Destination, URL for image when you make click 
+ */
 function Image(src, alt, link) {
 	this.src = src;
 	this.alt = alt;
 	this.link = link;
 };
-// Class Slider
+
+/**
+ * Defines the properties of Slider.
+ * 
+ * bullets: Let show or hide how many images are, it shows the selected one. Use "yes" to show them and "no" in otherwise. Default value: "yes". 
+ * controls: Let show or hide play and pause controls. Use "yes" to show them and "no" in otherwise. Default value: "yes",
+ * effect: Set of value that defines Slider effect.
+ * 			name: Name of effect. You can use "fade" or "toggle". Default value: "fade".
+ * 			opacity: Value of opacity, Define when effect is "fade", value is between 0 and 1, where 1 is normal opacity and 0 totally opaque. Default value 0.9
+ * ffControls: Let show or hide fast and forward controls. Use "yes" to show them and "no" in otherwise. Defaul value: "yes".
+ * url: You can use a request to get an XML or JSON answer. Defines url with this option. 
+ * frame: Let show or hide a frame for Slider. User "yes" to show it and "no" in otherwise. Default value: "no".
+ * images: You can use an array of Image objects to fill Slider. Note that you might use JSON notation.
+ * label: Let show or hide a label that shows a little information on the bottom of the image. Use "yes" to show it and "no" in otherwise. Default Value: "yes".
+ * preview: When you use label option, bullets can show a preview image over itself. This option let you show or hide a preview one, Use "yes" to show it and "no" in otherwise. Default value: "yes". 
+ * speed: Defines the time that image going to change. It must be in miliseconds. Default value: 3000 miliseconds.
+ * type: When you use a request to get images you must define data format, you can use "json" or "xml".
+ */
 function Slider(options) {
 	this.bullets = options.bullets == undefined ? "yes" : options.bullets;
 	this.controls = options.controls == undefined ? "yes" : options.controls;
@@ -16,11 +38,16 @@ function Slider(options) {
 	this.frame = options.frame == undefined ? "no" : "yes";
 	this.images = options.images.images != undefined ? options.images.images : new Array();
 	this.label = options.label == undefined ? "yes" : options.label;
-	this.preview = options.preview == undefined ? "yes" : options.preview;	
-	this.speed = options.speed;
+	this.preview = options.preview == undefined ? "yes" : options.preview;
+	this.speed = options.speed == undefined ? 3000 : option.speed;
 	this.type = options.type;	
 }
-// Functions of Slider
+
+/**
+ * Function that loads images to array. Use parameters defined in Slider constructor.
+ * @return true if it's successful, error message in otherwise.
+ *  
+ */
 Slider.prototype.loadImagesData = function() {	
 	try {
 		if(this.url != undefined) {			
@@ -61,72 +88,33 @@ var firstTime = true;
 function startAnimation() {
 	if(s.effect.name == "fade")
 		$("#bannerImage").fadeTo(1000, s.effect.opacity);
-	else if(s.effect.name == "slide")
-		$("#bannerImage").slideDown(s.speed);
+	/*else if(s.effect.name == "slide")
+		$("#bannerImage").slideDown(s.speed);*/
 	else if(s.effect.name == "toggle")
 		$("#bannerImage").toggle(s.effect.kind);
-	else if(s.effect.name == "animate") {
-		$("#bannerImage").animate({			 	
-    			left:'800px',
-    			width: '100px',
-    			opacity:'0.9',
-			 }, s.speed, s.effect.kind);
-	}
-	//runEffect();
 }
-
-function runEffect() {      // get effect type from    
-	    // most effect types need no options passed by default      
-	    var options = {};      
-	    // some effects have required parameters      
-	    if (s.effect.name === "scale" ) {        
-	    	options = { percent: 0 };      
-	    } else if ( s.effect.name === "transfer" ) { 
-	    	options = { to: "#button", className: "ui-effects-transfer" };      
-	    } else if ( s.effect.name === "size" ) { 
-	    	options = { to: { width: 200, height: 60 } };
-	    }       
-	    // run the effect
-	    $( "#bannerImage" ).effect( s.effect.name, options, 700, callback);    
-};
-
-// callback function to bring a hidden box back    
-function callback() {      
-	setTimeout(function() {
-		$( "#bannerImage" ).removeAttr( "style" ).fadeTo(1000, s.effect.opacity);
-	}, 500 );
-};
 
 function stopAnimation() {
 	if(s.effect.name == "fade")
 		$("#bannerImage").fadeTo(1500, s.effect.opacity);
-	else if(s.effect.name == "slide")
-		$("#bannerImage").slideUp(s.speed);
+	/*else if(s.effect.name == "slide")
+		$("#bannerImage").slideUp(s.speed);*/
 	else if(s.effect.name == "toggle")
 		$("#bannerImage").toggle(s.effect.kind);
-	else if(s.effect.name == "animate") { 
-		$("#bannerImage").css({
-			left:'',
-    		width: '',
-    		opacity:'',
-		});
-	}
 }
 
 function startBanner() {
 	if (i == s.images.length)
 		i = 0;
 	showNextImage(i, false);	
-	startAnimation();	
+	startAnimation();
 	timer = setTimeout("startBanner();", s.speed);	
 	stopAnimation();
 };
 
 function showNextImage(index, keepShow) {
-	if (keepShow) {
-		startAnimation();		
+	if (keepShow)
 		clearTimeout(timer);
-	}
 
 	i = i > s.images.length ? 0 : (i < 0 ? s.images.length - 1 : i);
 
@@ -137,9 +125,8 @@ function showNextImage(index, keepShow) {
 	$(".bSelector a img:eq(" + (index) + ")").attr("class", "selectedCircle");
 	$(".bottomLabelImg").text(s.images[index].alt);
 	if (keepShow) {
-		i = index;		
-		timer = setTimeout("startBanner();", s.speed);
-		stopAnimation();
+		i = index;				
+		timer = setTimeout("startBanner();", s.speed);		
 	} else
 		i++;
 	if(s.controls == "yes")
