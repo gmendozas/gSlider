@@ -1,14 +1,14 @@
-#mainContainer {
-	/*width: auto;
-	height: auto;*/
+.gSliderContainer {
+	width: auto;
+	height: auto;
 	border-style: none;
-	/*max-height: 90%;
+	max-height: 90%;
 	max-width: 90%;
 	min-height: 90%;
-	min-width: 90%;*/
+	min-width: 90%;
 	margin: 0;
 	padding: 0;
-	/*position: relative;*/
+	position: relative;
 	border: 15px solid #fff;
 	-webkit-box-shadow: 0 3px 5px #999;
 	-moz-box-shadow: 0 3px 5px #999;
@@ -28,7 +28,7 @@
 	border-style: none;
 }
 
-.slider .play {k
+.slider .play {
 	display: none;
 	position: absolute;
 	width: 50px;
@@ -152,22 +152,6 @@
 	width: 22px;
 	height: 20px;
 	color: transparent;
-}
-
-.rightLabelImg {
-	position: absolute;
-	display: none;
-	bottom: 10px;
-	right: 0px;
-	padding: 4px 15px;
-	font-weight: bold;
-	background: #14A0C1;
-	text-align: center;
-	color: white;
-	font-family: "Georgia","Times New Roman",serif;
-	font-style: italic;
-	text-shadow: 1px 1px 1px #897c63;
-	cursor: pointer;
 }
 
 .bottomLabelImg {
