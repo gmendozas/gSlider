@@ -35,14 +35,14 @@ function Slider(options) {
 	this.effect = options.effect;
 	this.effect.name = this.effect.name == undefined ? "fade" : options.effect.name;
 	this.effect.opacity = this.effect.opacity == undefined ? 0.9 : options.effect.opacity;
-	this.ffControls = options.ffControls == undefined ? "yes" : options.ffControls;
-	this.url = options.url;
-	this.frame = options.frame == undefined ? "no" : "yes";
+	this.ffControls = options.ffControls == undefined ? "yes" : options.ffControls;	
+	this.frame = "no"; //options.frame == undefined ? "no" : "yes"; Frame is not finished yet
 	this.images = options.images.images != undefined ? options.images.images : new Array();
 	this.label = options.label == undefined ? "yes" : options.label;
 	this.preview = options.preview == undefined ? "yes" : options.preview;
 	this.speed = options.speed == undefined ? 3000 : options.speed;
 	this.type = options.type;	
+	this.url = options.url;
 }
 
 /**
@@ -159,6 +159,17 @@ function showAndHideControls(){
 
 $(document).ready(function() {	
 	try {	
+		// Creating structure of gSlider
+		$(".gSliderContainer").append('<div class="slider"></div>');
+		$(".slider").append('<img class="play" src="images/play.png" />');
+		$(".slider").append('<img class="stop" src="images/pause.png" />');
+		$(".slider").append('<img class="previous" src="images/left.png" alt="Previous" title="Previous" />');
+		$(".slider").append('<a id="bannerLink" class="bElement" target="_blank"><img id="bannerImage" class="bElement" /><div class="bottomLabelImg"></div></a>');
+		$(".slider").append('<img class="next" src="images/right.png" alt="Next" title="Next" />');
+		$(".gSliderContainer").append('<div class="bSelector"></div>');
+		$(".bSelector").append('<img class="preview" />');		
+		// End of structure definition
+		
 		s.loadImagesData();
 		
 		if(s.frame != undefined) { // Show or hide frame
